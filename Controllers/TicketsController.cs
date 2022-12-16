@@ -78,7 +78,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
-            ViewData["OwnerUserid"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserid);
+            ViewData["OwnerUserid"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", ticket.ProjectId);
             ViewData["TicketPriorityId"] = new SelectList(_context.TicketPriorities, "Id", "Id", ticket.TicketPriorityId);
             ViewData["TicketStatusId"] = new SelectList(_context.TicketStatuses, "Id", "Id", ticket.TicketStatusId);
@@ -100,7 +100,7 @@ namespace BugTracker.Controllers
                 return NotFound();
             }
             ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
-            ViewData["OwnerUserid"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserid);
+            ViewData["OwnerUserid"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", ticket.ProjectId);
             ViewData["TicketPriorityId"] = new SelectList(_context.TicketPriorities, "Id", "Id", ticket.TicketPriorityId);
             ViewData["TicketStatusId"] = new SelectList(_context.TicketStatuses, "Id", "Id", ticket.TicketStatusId);
@@ -141,7 +141,7 @@ namespace BugTracker.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DeveloperUserId"] = new SelectList(_context.Users, "Id", "Id", ticket.DeveloperUserId);
-            ViewData["OwnerUserid"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserid);
+            ViewData["OwnerUserid"] = new SelectList(_context.Users, "Id", "Id", ticket.OwnerUserId);
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Name", ticket.ProjectId);
             ViewData["TicketPriorityId"] = new SelectList(_context.TicketPriorities, "Id", "Id", ticket.TicketPriorityId);
             ViewData["TicketStatusId"] = new SelectList(_context.TicketStatuses, "Id", "Id", ticket.TicketStatusId);

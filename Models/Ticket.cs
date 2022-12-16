@@ -45,7 +45,7 @@ namespace BugTracker.Models
         public int TicketStatusId { get; set; }
 
         [DisplayName("Ticket Owner")]
-        public string OwnerUserid { get; set; }
+        public string OwnerUserId { get; set; }
 
         [DisplayName("Ticket Developer")]
         public string DeveloperUserId { get; set; }

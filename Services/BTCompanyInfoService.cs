@@ -3,6 +3,8 @@ using BugTracker.Models;
 using BugTracker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+#nullable disable
+
 namespace BugTracker.Services
 {
     public class BTCompanyInfoService : IBTCompanyInfoService
