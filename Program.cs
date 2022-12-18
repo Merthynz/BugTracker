@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(DataUtility.GetConnectionString(builder.Configuration), o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentity<BTUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -34,6 +34,14 @@ builder.Services.AddScoped<IBTFileService, BTFileService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Fix for InvalidCastException: Cannot write DateTimeOffset with Offset to PostgreSQL type
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+
+// Data Utility
+await DataUtility.ManageDataAsync(app);
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -61,3 +69,4 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
