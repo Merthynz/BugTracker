@@ -23,9 +23,11 @@ namespace BugTracker.Models
         public string Description { get; set; }
 
         [DisplayName("Start Date")]
+        [DataType(DataType.Date)]
         public DateTimeOffset StartDate { get; set; }
 
         [DisplayName("End Date")]
+        [DataType(DataType.Date)]
         public DateTimeOffset EndDate { get; set; }
 
         [DisplayName("Priority")]
@@ -41,6 +43,7 @@ namespace BugTracker.Models
         [DisplayName("File Extension")]
         public string ImageContentType { get; set; }
 
+        [DisplayName("Archived")]
         public bool Archived { get; set; }
 
 

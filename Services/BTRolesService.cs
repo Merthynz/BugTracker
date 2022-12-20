@@ -2,6 +2,7 @@
 using BugTracker.Models;
 using BugTracker.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -9,17 +10,42 @@ namespace BugTracker.Services
 {
     public class BTRolesService : IBTRolesService
     {
+        #region Properties
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<BTUser> _userManager;
+
+        #endregion
+
+        #region Constructor
         public BTRolesService(ApplicationDbContext context,
-                              RoleManager<IdentityRole> roleManager,
-                              UserManager<BTUser> userManager)
+                      RoleManager<IdentityRole> roleManager,
+                      UserManager<BTUser> userManager)
         {
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
         }
+
+        #endregion
+
+        #region Get Roles
+        public async Task<List<IdentityRole>> GetRolesAsync()
+        {
+            try
+            {
+                List<IdentityRole> result = new();
+                result = await _context.Roles.ToListAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
 
         #region Add User To Role
         public async Task<bool> AddUserToRoleAsync(BTUser user, string roleName)
@@ -29,6 +55,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get Role Name By Id
         public async Task<string> GetRoleNameByIdAsync(string roleId)
         {
@@ -38,6 +65,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get User Roles
         public async Task<IEnumerable<string>> GetUserRolesAsync(BTUser user)
         {
@@ -46,6 +74,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get Users In Role
         public async Task<List<BTUser>> GetUsersInRoleAsync(string roleName, int companyId)
         {
@@ -55,6 +84,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get Users Not In Role
         public async Task<List<BTUser>> GetUsersNotInRoleAsync(string roleName, int companyId)
         {
@@ -66,6 +96,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Is User In Role
         public async Task<bool> IsUserInRoleAsync(BTUser user, string roleName)
         {
@@ -74,6 +105,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Remove User From Role
         public async Task<bool> RemoveUserFromRoleAsync(BTUser user, string roleName)
         {
@@ -82,6 +114,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Remove User From Roles
         public async Task<bool> RemoveUserFromRolesAsync(BTUser user, IEnumerable<string> roles)
         {
