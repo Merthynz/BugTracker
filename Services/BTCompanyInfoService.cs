@@ -24,6 +24,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get All Projects
         public async Task<List<Project>> GetAllProjectsAsync(int companyId)
         {
@@ -56,6 +57,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get All Tickets
         public async Task<List<Ticket>> GetAllTicketsAsync(int companyId)
         {
@@ -70,6 +72,7 @@ namespace BugTracker.Services
         }
 
         #endregion
+
         #region Get Company Info By Id
         public async Task<Company> GetCompanyInfoByIdAsync(int? companyId)
         {
