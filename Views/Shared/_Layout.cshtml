@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using BugTracker.Models.Enums
 @inject SignInManager<BTUser> SignInManager
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
             <div class="col-12 col-sm-3 col-xl-2 px-0 bg-dark d-flex sticky-top">
                 <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
                     <a href="/css/" class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-4">B</span><span class="d-none d-sm-inline">ugTracker</span>
+                        <span class="fs-5">B</span><span class="d-none d-sm-inline">ugTracker</span>
                     </a>
                     <partial name="_LoginPartial" />
 
@@ -40,7 +41,10 @@
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdown">
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Projects"asp-action="Create">New project...</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Index">Index</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="MyProjects">My Projects</a></li>
+                                    @if (!User.IsInRole(nameof(Roles.Admin)))
+                                    {
+                                        <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="MyProjects">My Projects</a></li>
+                                    }
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="AllProjects">All Projects</a></li>
                                     <li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">Archived Projects</a></li>
                                 </ul>
