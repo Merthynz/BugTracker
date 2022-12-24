@@ -8,7 +8,7 @@ namespace BugTracker.Services.Interfaces
 
         public Task<List<TicketStatus>> GetTicketStatusesAsync();
 
-        public Task<List<TicketType>> GetTicketTypeAsync();
+        public Task<List<TicketType>> GetTicketTypesAsync();
 
         public Task<List<ProjectPriority>> GetProjectPrioritiesAsync();
     }
