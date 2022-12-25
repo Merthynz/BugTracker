@@ -105,6 +105,7 @@ namespace BugTracker.Services
 
         #endregion
 
+        #region Archive Project
         // CRUD - Archive (Delete)
         public async Task ArchiveProjectAsync(Project project)
         {
@@ -128,6 +129,8 @@ namespace BugTracker.Services
                 throw;
             }
         }
+
+        #endregion
 
         #region Get All Project Members Except PM
         public async Task<List<BTUser>> GetAllProjectMembersExceptPMAsync(int projectId)
@@ -356,6 +359,32 @@ namespace BugTracker.Services
             List<BTUser> users = await _context.Users.Where(u => u.Projects.All(p => p.Id != projectId)).ToListAsync();
 
             return users.Where(u => u.CompanyId == companyId).ToList();
+        }
+
+        #endregion
+
+        #region Is Assigned Project Manager
+
+        public async Task<bool> IsAssignedProjectManagerAsync(string userId, int projectId)
+        {
+            try
+            {
+                string projectManagerId = (await GetProjectManagerAsync(projectId))?.Id;
+
+                if (projectManagerId == userId)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         #endregion
