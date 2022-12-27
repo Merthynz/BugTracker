@@ -12,6 +12,7 @@ using BugTracker.Extensions;
 using BugTracker.Models.Enums;
 using BugTracker.Services.Interfaces;
 using System.ComponentModel.Design;
+using Microsoft.AspNetCore.Authorization;
 
 #nullable disable
 
@@ -26,18 +27,18 @@ namespace BugTracker.Controllers
         private readonly IBTTicketService _ticketService;
         private readonly IBTFileService _fileService;
 
-		public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTProjectService projectService, IBTLookupService lookupService, IBTTicketService ticketService, IBTFileService fileService)
-		{
-			_context = context;
-			_userManager = userManager;
-			_projectService = projectService;
-			_lookupService = lookupService;
-			_ticketService = ticketService;
-			_fileService = fileService;
-		}
+        public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTProjectService projectService, IBTLookupService lookupService, IBTTicketService ticketService, IBTFileService fileService)
+        {
+            _context = context;
+            _userManager = userManager;
+            _projectService = projectService;
+            _lookupService = lookupService;
+            _ticketService = ticketService;
+            _fileService = fileService;
+        }
 
-		// GET: Tickets
-		public async Task<IActionResult> Index()
+        // GET: Tickets
+        public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Tickets.Include(t => t.DeveloperUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType).OrderByDescending(t => t.Created);
             return View(await applicationDbContext.ToListAsync());
@@ -77,6 +78,35 @@ namespace BugTracker.Controllers
             return View(tickets);
         }
 
+        [Authorize(Roles = "Admin, ProjectManager")]
+        public async Task<IActionResult> UnassignedTickets()
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+            string btUserId = _userManager.GetUserId(User);
+
+            List<Ticket> tickets = await _ticketService.GetUnassignedTicketsAsync(companyId);
+
+            if (User.IsInRole(nameof(Roles.Admin)))
+            {
+                return View(tickets);
+            }
+            else
+            {
+                List<Ticket> pmTickets = new();
+
+                foreach(Ticket ticket in tickets)
+                {
+                    if(await _projectService.IsAssignedProjectManagerAsync(btUserId, ticket.ProjectId))
+                    {
+                        pmTickets.Add(ticket);
+                    }
+                }
+
+                return View(pmTickets);
+            }
+        }
+
+
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -84,9 +114,9 @@ namespace BugTracker.Controllers
             {
                 return NotFound();
             }
-           
+
             Ticket ticket = await _ticketService.GetTicketByIdAsync(id.Value);
-            
+
             if (ticket == null)
             {
                 return NotFound();
@@ -102,7 +132,7 @@ namespace BugTracker.Controllers
 
             if (User.IsInRole(nameof(Roles.Admin)))
             {
-            ViewData["ProjectId"] = new SelectList(await _projectService.GetAllProjectsByCompanyAsync(btUser.CompanyId), "Id", "Name");
+                ViewData["ProjectId"] = new SelectList(await _projectService.GetAllProjectsByCompanyAsync(btUser.CompanyId), "Id", "Name");
 
             }
             else
@@ -292,7 +322,7 @@ namespace BugTracker.Controllers
             }
 
             Ticket ticket = await _ticketService.GetTicketByIdAsync(id.Value);
-            
+
             if (ticket == null)
             {
                 return NotFound();
