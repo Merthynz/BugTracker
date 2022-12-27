@@ -10,16 +10,22 @@ namespace BugTracker.Services
 {
     public class BTTicketService : IBTTicketService
     {
+        #region Properties
         private readonly ApplicationDbContext _context;
         private readonly IBTRolesService _rolesService;
         private readonly IBTProjectService _projectService;
 
+        #endregion
+
+        #region Constructor
         public BTTicketService(ApplicationDbContext context, IBTRolesService rolesService, IBTProjectService projectService)
         {
             _context = context;
             _rolesService = rolesService;
             _projectService = projectService;
         }
+
+        #endregion
 
         #region Add New Ticket
         public async Task AddNewTicketAsync(Ticket ticket)
@@ -38,6 +44,38 @@ namespace BugTracker.Services
             await _context.SaveChangesAsync();
         }
 
+        #endregion
+
+        #region Add Ticket Comment
+        public async Task AddTicketCommentAsync(TicketComment ticketComment)
+        {
+            try
+            {
+                await _context.AddAsync(ticketComment);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region Add Ticket Attachment
+        public async Task AddTicketAttachmentAsync(TicketAttachment ticketAttachment)
+        {
+            try
+            {
+                await _context.AddAsync(ticketAttachment);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
 
         #region Assign Ticket
@@ -322,6 +360,24 @@ namespace BugTracker.Services
             }
         }
 
+        #endregion
+
+        #region Get Ticket Attachment By Id
+        public async Task<TicketAttachment> GetTicketAttachmentByIdAsync(int ticketAttachmentId)
+        {
+            try
+            {
+                TicketAttachment ticketAttachment = await _context.TicketAttachments
+                                                                  .Include(t => t.User)
+                                                                  .FirstOrDefaultAsync(t => t.Id == ticketAttachmentId);
+                return ticketAttachment;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
 
         #region Get Ticket Developer
