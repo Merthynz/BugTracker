@@ -27,8 +27,9 @@ namespace BugTracker.Controllers
         private readonly IBTLookupService _lookupService;
         private readonly IBTTicketService _ticketService;
         private readonly IBTFileService _fileService;
+        private readonly IBTTicketHistoryService _historyService;
 
-        public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTProjectService projectService, IBTLookupService lookupService, IBTTicketService ticketService, IBTFileService fileService)
+        public TicketsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTProjectService projectService, IBTLookupService lookupService, IBTTicketService ticketService, IBTFileService fileService, IBTTicketHistoryService historyService)
         {
             _context = context;
             _userManager = userManager;
@@ -36,6 +37,7 @@ namespace BugTracker.Controllers
             _lookupService = lookupService;
             _ticketService = ticketService;
             _fileService = fileService;
+            _historyService = historyService;
         }
 
         // GET: Tickets
@@ -248,7 +250,8 @@ namespace BugTracker.Controllers
 
             if (ModelState.IsValid)
             {
-                BTUser btuser = await _userManager.GetUserAsync(User);
+                BTUser btUser = await _userManager.GetUserAsync(User);
+                Ticket oldTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id);
 
                 try
                 {
@@ -268,7 +271,10 @@ namespace BugTracker.Controllers
                 }
 
                 //TODO: Add Ticket History
-                return RedirectToAction(nameof(Index));
+                Ticket newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id);
+                await _historyService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
+
+                return RedirectToAction(nameof(AllTickets));
             }
 
             ViewData["TicketPriorityId"] = new SelectList(await _lookupService.GetTicketPrioritiesAsync(), "Id", "Name", ticket.TicketPriorityId);

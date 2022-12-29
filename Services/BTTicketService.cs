@@ -238,6 +238,30 @@ namespace BugTracker.Services
 
         #endregion
 
+        #region Get Ticket As No Tracking
+        public async Task<Ticket> GetTicketAsNoTrackingAsync(int ticketId)
+        {
+            try
+            {
+                return await _context.Tickets
+                     .Include(t => t.DeveloperUser)
+                     .Include(t => t.Project)
+                     .Include(t => t.TicketPriority)
+                     .Include(t => t.TicketStatus)
+                     .Include(t => t.TicketType)
+                     .AsNoTracking()
+                     .FirstOrDefaultAsync(t => t.Id == ticketId);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
+
         #region Get Archived Ticket
         public async Task<List<Ticket>> GetArchivedTicketsAsync(int companyId) 
         
