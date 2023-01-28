@@ -23,7 +23,7 @@
     else
     {
         <a asp-area="Identity" asp-page="/Account/Login" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" width="28" height="28" class="rounded-circle">
+            <img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" width="28" height="28" class="rounded-circle me-2">
             <span class="d-none d-sm-inline mx-a">Log In</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -32,8 +32,22 @@
                 <hr class="dropdown-divider">
             </li>
             <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Sign In</a></li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login" onclick="setAdminValue()">Demo Admin</a></li>
+            <li><a class="dropdown-item" onclick="setPMValue()" asp-area="Identity" asp-page="/Account/Login">Demo Project Manager</a></li>
+            <li><a class="dropdown-item" onclick="setDevValue()" asp-area="Identity" asp-page="/Account/Login">Demo Developer</a></li>
+            <li><a class="dropdown-item" onclick="setSubmitterValue()" asp-area="Identity" asp-page="/Account/Login">Demo Submitter</a></li>
         </ul>
+        
     }
 </div>
 <form id="logoutForm" class="form-check-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
 </form>
+
+@section Scripts {
+}

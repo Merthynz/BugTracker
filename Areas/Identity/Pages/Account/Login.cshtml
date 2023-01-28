@@ -6,6 +6,9 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+
+
+
 <div class="row">
     <div class="col-md-4">
         <section>
@@ -24,7 +27,7 @@
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div>
-                    <div class="checkbox">
+                    <div class="checkbox mb-3">
                         <label asp-for="Input.RememberMe" class="form-label">
                             <input class="form-check-input" asp-for="Input.RememberMe" />
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
@@ -32,8 +35,9 @@
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-4">Log in</button>
                 </div>
+
                 <div>
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
@@ -45,6 +49,14 @@
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
                 </div>
+
+                <div>
+                    <button class="btn btn-primary mt-3" onclick="setAdminValue()">Demo Admin</button>
+                    <button class="btn btn-primary mt-3" onclick="setPMValue()">Demo Project Manager</button>
+                    <button class="btn btn-primary mt-3" onclick="setDevValue()">Demo Developer</button>
+                    <button class="btn btn-primary mt-3" onclick="setSubmitterValue()">Demo Submitter</button>
+                </div>
+
             </form>
         </section>
     </div>
@@ -82,4 +94,35 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function setAdminValue() {
+            var email = document.getElementById("email");
+            email.value = "btadmin1@BugTracker.com";
+            var password = document.getElementById("password");
+            password.value = "Abc&123!"
+        }
+
+        function setPMValue() {
+            var email = document.getElementById("email");
+            email.value = "ProjectManager1@BugTracker.com";
+            var password = document.getElementById("password");
+            password.value = "Abc&123!"
+        }
+
+        function setDevValue() {
+            var email = document.getElementById("email");
+            email.value = "Developer1@BugTracker.com";
+            var password = document.getElementById("password");
+            password.value = "Abc&123!"
+        }
+
+        function setSubmitterValue() {
+            var email = document.getElementById("email");
+            email.value = "Submitter1@BugTracker.com";
+            var password = document.getElementById("password");
+            password.value = "Abc&123!"
+        }
+    </script>
+
 }
