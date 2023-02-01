@@ -248,7 +248,7 @@ namespace BugTracker.Controllers
                 }
 
                 // TODO: Redirect to All Projects
-                return RedirectToAction("Index");
+                return RedirectToAction("AllProjects");
             }
 
             return RedirectToAction("Create");
@@ -298,7 +298,7 @@ namespace BugTracker.Controllers
                         await _projectService.AddProjectManagerAsync(model.PmId, model.Project.Id);
                     }
 
-                    return RedirectToAction(nameof(AllProjects));
+                    //return RedirectToAction(nameof(AllProjects)); This causes Redirect to All Projects not to work.
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -314,7 +314,7 @@ namespace BugTracker.Controllers
                 }
 
                 // TODO: Redirect to All Projects
-                return RedirectToAction("Index");
+                return RedirectToAction("AllProjects");
             }
 
             return RedirectToAction("Edit");
@@ -352,7 +352,7 @@ namespace BugTracker.Controllers
 
             await _projectService.ArchiveProjectAsync(project);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ArchivedProjects));
         }
 
         // GET: Projects/Restore/5
