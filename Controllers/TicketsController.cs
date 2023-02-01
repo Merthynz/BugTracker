@@ -206,6 +206,7 @@ namespace BugTracker.Controllers
                 {
                     ticket.Created = DateTimeOffset.Now;
                     ticket.OwnerUserId = btUser.Id;
+                    ticket.Updated = DateTimeOffset.Now;
 
                     ticket.TicketStatusId = (await _ticketService.LookupTicketStatusIdAsync(nameof(BTTicketStatus.New))).Value;
 
