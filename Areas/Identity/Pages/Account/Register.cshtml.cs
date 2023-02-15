@@ -87,6 +87,13 @@ namespace BugTracker.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
+
+            [Required]
+            [Display(Name = "Company Name")]
+            public string CompanyName { get; set; }
+
+            [Display(Name = "Company Description")]
+            public string Description { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -120,7 +127,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new BTUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
+                var user = new BTUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, CompanyName = Input.CompanyName, Description = Input.Description };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
