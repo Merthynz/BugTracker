@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using BugTracker.Services.Interfaces;
+using BugTracker.Models.Enums;
 
 namespace BugTracker.Areas.Identity.Pages.Account
 {
@@ -30,13 +32,18 @@ namespace BugTracker.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<BTUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IBTCompanyInfoService _companyInfoService;
+        private readonly IBTRolesService _rolesService;
+
 
         public RegisterModel(
             UserManager<BTUser> userManager,
             IUserStore<BTUser> userStore,
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IBTCompanyInfoService companyInfoService,
+            IBTRolesService rolesService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +51,8 @@ namespace BugTracker.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _companyInfoService = companyInfoService;
+            _rolesService = rolesService;
         }
 
         /// <summary>
@@ -127,9 +136,24 @@ namespace BugTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new BTUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, CompanyName = Input.CompanyName, Description = Input.Description };
+                var user = new BTUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Company = await _companyInfoService.AddUserAsync(Input.CompanyName, Input.Description)
+                };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None); 
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+
+                if ((await _rolesService.GetUsersInRoleAsync(nameof(Roles.Admin), user.Company.Id)).Count == 0)
+                {
+                    await _rolesService.AddUserToRoleAsync(user, nameof(Roles.Admin));
+                }
 
                 if (result.Succeeded)
                 {
