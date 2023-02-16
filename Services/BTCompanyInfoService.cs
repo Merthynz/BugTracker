@@ -36,6 +36,13 @@ namespace BugTracker.Services
 
         public async Task<Company> AddUserAsync(string CompanyName, string Description)
         {
+            Company newCompany = new()
+            {
+                CompanyName = CompanyName,
+                Description = Description
+            };
+
+
             CompanyName = CompanyName.ToLower();
             Description = Description.ToLower();
 
@@ -49,16 +56,18 @@ namespace BugTracker.Services
                 }
             }
 
-            Company newCompany = new()
-            {
-                CompanyName = CompanyName,
-                Description = Description
-            };
+            //Company newCompany = new()
+            //{
+            //    CompanyName = CompanyName,
+            //    Description = Description
+            //};
 
             await AddCompanyAsync(newCompany);
 
+
             return newCompany;
-        } 
+
+        }
         #endregion
 
         #region Get All Members
