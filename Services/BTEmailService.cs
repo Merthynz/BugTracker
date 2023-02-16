@@ -17,8 +17,11 @@ namespace BugTracker.Services
 
         public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
         {
+            var emailSender = _mailSettings.Mail ?? Environment.GetEnvironmentVariable("Email");
+            
             MimeMessage email = new();
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+            //email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+            email.Sender = MailboxAddress.Parse(emailSender);
             email.To.Add(MailboxAddress.Parse(emailTo));
             email.Subject = subject;
 
@@ -32,8 +35,17 @@ namespace BugTracker.Services
             try
             {
                 using var smtp = new SmtpClient();
-                smtp.Connect(_mailSettings.Host, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
-                smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+
+                var host = _mailSettings.Host ?? Environment.GetEnvironmentVariable("Host");
+                var port = _mailSettings.Port != 0 ? _mailSettings.Port : int.Parse(Environment.GetEnvironmentVariable("Port")!);
+                var password = _mailSettings.Password ?? Environment.GetEnvironmentVariable("Password");
+
+                //smtp.Connect(_mailSettings.Host, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+                smtp.Connect(host, port, MailKit.Security.SecureSocketOptions.StartTls);
+
+                //smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+                smtp.Authenticate(emailSender, password);
+
 
                 await smtp.SendAsync(email);
 
