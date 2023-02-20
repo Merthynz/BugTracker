@@ -56,12 +56,6 @@ namespace BugTracker.Services
                 }
             }
 
-            //Company newCompany = new()
-            //{
-            //    CompanyName = CompanyName,
-            //    Description = Description
-            //};
-
             await AddCompanyAsync(newCompany);
 
 
