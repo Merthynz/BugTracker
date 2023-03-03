@@ -5,8 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-BugTracker-1b2e8619-eed7-4caa-970f-dd44af91981e</UserSecretsId>
-	<InvariantGlobalization>true</InvariantGlobalization>
-	<EnvironmentName>Development</EnvironmentName>
+	  <InvariantGlobalization>true</InvariantGlobalization>
+	  <EnvironmentName>Development</EnvironmentName>
   </PropertyGroup>
 
   <ItemGroup>
