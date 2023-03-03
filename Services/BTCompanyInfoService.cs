@@ -15,7 +15,7 @@ namespace BugTracker.Services
             _context = context;
         }
 
-        #region Add Company
+       #region Add Company
         public async Task<Company> AddCompanyAsync(Company company)
         {
             try
@@ -30,7 +30,7 @@ namespace BugTracker.Services
                 throw;
             }
         }
-
+        
         #endregion
 
         #region Add User
@@ -59,8 +59,9 @@ namespace BugTracker.Services
 
             return newCompany;
         }
-
+        
         #endregion
+        
         #region Get All Members
         public async Task<List<BTUser>> GetAllMembersAsync(int companyId)
         {

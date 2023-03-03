@@ -1,10 +1,37 @@
 ﻿@page
-@model LoginModel
+@model DemoLoginModel
 
 @{
     ViewData["Title"] = "Log in";
 }
 <h1>@ViewData["Title"]</h1>
+<h5 class="mt-3">Choose a demo.</h5>
+<div>
+
+    <button class="btn btn-primary mb-2" onclick="setAdminValue()">Demo Admin</button>
+    <button class="btn btn-primary mb-2" onclick="setPMValue()">Demo Project Manager</button>
+    <button class="btn btn-primary mb-2" onclick="setDevValue()">Demo Developer</button>
+    <br/>
+    <button class="btn btn-primary mb-2" onclick="setSubmitterValue()">Demo Submitter</button>
+    <button class="btn btn-primary mb-2" onclick="setNewUserValue()">Demo NewUser</button>
+</div>
+
+@*Test Buttons*@
+@*<div>
+    <button class="btn btn-success mb-5" onclick="setAdminValue1()">Bill - Admin</button>
+    <button class="btn btn-success mb-5" onclick="setAdminValue2()">Steve - Admin</button>
+    <button class="btn btn-success mb-5" onclick="setPMValue1()">John - Project Manager</button>
+    <button class="btn btn-success mb-5" onclick="setPMValue2()">Jane - Project Manager</button>
+    <button class="btn btn-success mb-5" onclick="setDevValue1()">Elon - Developer</button>
+    <button class="btn btn-success mb-5" onclick="setDevValue2()">James - Developer</button>
+    <button class="btn btn-success mb-5" onclick="setDevValue3()">Natasha - Developer</button>
+    <button class="btn btn-success mb-5" onclick="setDevValue4()">Carol - Developer</button>
+    <button class="btn btn-success mb-5" onclick="setDevValue5()">Tony - Developer</button>
+    <button class="btn btn-success mb-5" onclick="setDevValue6()">Bruce - Developer</button>
+    <button class="btn btn-success mb-5" onclick="setSubmitterValue1()">Scott - Submitter</button>
+    <button class="btn btn-success mb-5" onclick="setSubmitterValue2()">Sue - Submitter</button>
+</div>*@
+
 
 <div class="row">
     <div class="col-md-4">

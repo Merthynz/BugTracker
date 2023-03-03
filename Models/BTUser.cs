@@ -31,6 +31,7 @@ namespace BugTracker.Models
         public int CompanyId { get; set; }
 
         [DisplayName("Company Name")]
+        [DisplayName("Company Name")]
         public string Name { get; set; }
 
         [DisplayName("Description")]
