@@ -15,6 +15,52 @@ namespace BugTracker.Services
             _context = context;
         }
 
+        #region Add Company
+        public async Task<Company> AddCompanyAsync(Company company)
+        {
+            try
+            {
+                await _context.AddAsync(company);
+                await _context.SaveChangesAsync();
+                return company;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Add User
+        public async Task<Company> AddUserAsync(string Name, string Description)
+        {
+            Name = Name.ToLower();
+            Description = Description.ToLower();
+
+            List<Company> companies = await _context.Companies!.ToListAsync();
+
+            foreach (Company company in companies)
+            {
+                if (company.Name == Name)
+                {
+                    return company;
+                }
+            }
+
+            Company newCompany = new()
+            {
+                Name = Name,
+                Description = Description
+            };
+
+            await AddCompanyAsync(newCompany);
+
+            return newCompany;
+        }
+
+        #endregion
         #region Get All Members
         public async Task<List<BTUser>> GetAllMembersAsync(int companyId)
         {
@@ -90,5 +136,6 @@ namespace BugTracker.Services
         }
 
         #endregion    }
+
     }
 }
