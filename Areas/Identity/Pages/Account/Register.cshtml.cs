@@ -35,6 +35,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
         private readonly IBTCompanyInfoService _companyInfoService;
         private readonly IBTRolesService _rolesService;
 
+
         public RegisterModel(
             UserManager<BTUser> userManager,
             IUserStore<BTUser> userStore,
@@ -98,9 +99,9 @@ namespace BugTracker.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Company Name")]
-            public string Name { get; set; }
+            public string CompanyName { get; set; }
 
-            [Display(Name = "Description")]
+            [Display(Name = "Company Description")]
             public string Description { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -135,12 +136,18 @@ namespace BugTracker.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new BTUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName, Company = await _companyInfoService.AddUserAsync(Input.Name, Input.Description) };
+                var user = new BTUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    Company = await _companyInfoService.AddUserAsync(Input.CompanyName, Input.Description)
+                };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None); 
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 if ((await _rolesService.GetUsersInRoleAsync(nameof(Roles.Admin), user.Company.Id)).Count == 0)

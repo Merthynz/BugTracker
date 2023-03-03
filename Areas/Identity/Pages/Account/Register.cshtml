@@ -1,6 +1,5 @@
 ﻿@page
 @model RegisterModel
-@using BugTracker.Models
 @{
     ViewData["Title"] = "Register";
 }
@@ -32,9 +31,9 @@
             </div>
             <br />
             <div class="form-floating">
-                <input asp-for="Input.Name" class="form-control" autocomplete="name" aria-required="true" />
-                <label asp-for="Input.Name"></label>
-                <span asp-validation-for="Input.Name" class="text-danger"></span>
+                <input asp-for="Input.CompanyName" class="form-control" autocomplete="companyname" aria-required="true" />
+                <label asp-for="Input.CompanyName"></label>
+                <span asp-validation-for="Input.CompanyName" class="text-danger"></span>
             </div>
             <br />
             <div class="form-floating">
@@ -42,7 +41,6 @@
                 <label asp-for="Input.Description"></label>
                 <span asp-validation-for="Input.Description" class="text-danger"></span>
             </div>
-
             <br />
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />

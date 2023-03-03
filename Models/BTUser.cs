@@ -31,11 +31,12 @@ namespace BugTracker.Models
         public int CompanyId { get; set; }
 
         [DisplayName("Company Name")]
-        [DisplayName("Company Name")]
-        public string Name { get; set; }
+        public string CompanyName { get; set; }
 
-        [DisplayName("Description")]
+        [DisplayName("Company Description")]
         public string Description { get; set; }
+
+
 
         // Navigation Properties
         public virtual Company Company { get; set; }
