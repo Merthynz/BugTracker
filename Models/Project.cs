@@ -34,7 +34,7 @@ namespace BugTracker.Models
         public int? ProjectPriorityId { get; set; }
 
         [NotMapped]
-        [DataType(DataType.Date)]
+        [DataType(DataType.Upload)]
         public IFormFile ImageFormFile { get; set; }
 
         public string ImageFileName { get; set; }

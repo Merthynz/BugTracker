@@ -142,7 +142,7 @@ namespace BugTracker.Areas.Identity.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
-                    Company = await _companyInfoService.AddUserAsync(Input.CompanyName, Input.Description)
+                    Company = await _companyInfoService.AddUserAsync(Input.CompanyName, Input.Description),
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -150,10 +150,13 @@ namespace BugTracker.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None); 
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
+                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+
                 if ((await _rolesService.GetUsersInRoleAsync(nameof(Roles.Admin), user.Company.Id)).Count == 0)
                 {
                     await _rolesService.AddUserToRoleAsync(user, nameof(Roles.Admin));
                 }
+
 
                 if (result.Succeeded)
                 {
