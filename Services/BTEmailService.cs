@@ -17,7 +17,7 @@ namespace BugTracker.Services
 
         public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
         {
-            var emailSender = _mailSettings.Mail ?? Environment.GetEnvironmentVariable("Email");
+            var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
             
             MimeMessage email = new();
             //email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
