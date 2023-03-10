@@ -97,6 +97,8 @@ namespace BugTracker.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
+            public int CompanyId { get; set; }
+
             [Required]
             [Display(Name = "Company Name")]
             public string CompanyName { get; set; }
