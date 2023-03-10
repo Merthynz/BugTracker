@@ -37,7 +37,7 @@ namespace BugTracker.Services
                 using var smtp = new SmtpClient();
 
                 var host = _mailSettings.Host ?? Environment.GetEnvironmentVariable("Host");
-                var port = _mailSettings.Port != 0 ? _mailSettings.Port : int.Parse(Environment.GetEnvironmentVariable("Port")!);
+                var port = _mailSettings.EmailPort != 0 ? _mailSettings.EmailPort : int.Parse(Environment.GetEnvironmentVariable("Port")!);
                 var password = _mailSettings.Password ?? Environment.GetEnvironmentVariable("Password");
 
                 //smtp.Connect(_mailSettings.Host, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
