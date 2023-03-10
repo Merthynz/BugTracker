@@ -49,7 +49,7 @@ namespace BugTracker.Controllers
             }
 
             // Return the model to the view
-            return View();
+            return View(model);
         }
 
         [HttpPost]
