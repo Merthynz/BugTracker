@@ -2,6 +2,7 @@
 {
     public enum Roles
     {
+        SuperAdmin,
         Admin,
         ProjectManager,
         Developer,
