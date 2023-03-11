@@ -39,6 +39,8 @@ namespace BugTracker.Models
         [DisplayName("Invitee Last Name")]
         public string InviteeLastName { get; set; }
 
+        public string Message { get; set; }
+
         public bool IsValid { get; set; }
 
 
