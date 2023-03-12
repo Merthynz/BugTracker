@@ -24,7 +24,7 @@
                         <input asp-for="InviteeEmail" class="form-control mb-2" />
                         <span asp-validation-for="InviteeEmail" class="text-danger"></span>
                     </div>
-                    @*<div class="form-group">
+                    <div class="form-group">
                         <label asp-for="InviteDate" class="control-label"></label>
                         <input asp-for="InviteDate" class="form-control" />
                         <span asp-validation-for="InviteDate" class="text-danger"></span>
@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <label asp-for="InviteeId" class="control-label"></label>
                         <select asp-for="InviteeId" class="form-control" asp-items="ViewBag.InviteeId"></select>
-                    </div>*@
+                    </div>
                     <div class="row">
                     <div class="col-12 col-lg-6">
                         <label asp-for="InviteeFirstName" class="control-label">First Name</label>
@@ -70,11 +70,11 @@
                         <span asp-validation-for="Message" class="text-danger"></span>
                     </div>
                     
-                    @*<div class="form-group form-check">
+                    <div class="form-group form-check">
                         <label class="form-check-label">
                             <input class="form-check-input" asp-for="IsValid" /> @Html.DisplayNameFor(model => model.IsValid)
                         </label>
-                    </div>*@
+                    </div>
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />
                     </div>
