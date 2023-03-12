@@ -1,74 +1,86 @@
 ﻿@model IEnumerable<BugTracker.Models.Project>
+@using BugTracker.Models.Enums;
 
 @{
     ViewData["Title"] = "Unassigned Projects";
 }
 
-<h1>Unassigned Projects</h1>
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="row col-12">
+            <div class="text-end mb-2">
+                @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                {
+                    <a asp-action='Create' class="btn btn-lg btn-outline-primary rounded shadow w-auto">Create New</a>
+                }
+            </div>
+            <div class="p-3 border border-2 shadow bg-light">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+                <h1>Unassigned Projects</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageFileData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Archived)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectPriority)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @if (item.ImageFileData != null)
-                    {
-                        <img style="width:60px; height:60px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" alt="" />
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Archived)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
-                </td>
-                <td>
-                    <a class="btn btn-sm btn-outline-secondary" asp-action="AssignPM" asp-route-projectId="@item.Id">Add PM</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ImageFileData)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Archived)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProjectPriority)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @if (item.ImageFileData != null)
+                                    {
+                                        <img style="width:60px; height:60px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData))" alt="" />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Archived)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-action="AssignPM" asp-route-projectId="@item.Id">Add PM</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
