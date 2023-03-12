@@ -5,77 +5,76 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="row  d-flex justify-content-center">
-
-<div class="p-3 border border-2 shadow-lg bg-light col-10 mt-5">
-    <h1>Create a project</h1>
-    <form asp-action="Edit" asp-controller="Contacts" enctype="multipart/form-data">
-        <div class="row g-3 p-2">
-            <div class="col-12 col-lg-4">
-                <div class="square-img-container mb-3">
-                    @if (Model.Project?.ImageFileData != null)
-                {
-                    <img id="imageFileData" class="img-fluid img-thumbnail" src="data:image/*;base64,@(Convert.ToBase64String(Model.Project.ImageFileData))">
-                }
-                else
-                {
-                    <img id="imageFileData" class="img-fluid img-thumbnail" src="~/img/defaultUserImage.png">
-                }
+<div class="row d-flex justify-content-center">
+    <div class="p-3 border border-2 shadow-lg bg-light col-10 mt-5">
+        <h1>Create a project</h1>
+        <form asp-action="Create" asp-controller="Projects" enctype="multipart/form-data">
+            <div class="row g-3 p-2">
+                <div class="col-12 col-lg-4">
+                    <div class="square-img-container mb-3">
+                        @if (Model.Project?.ImageFileData != null)
+                        {
+                            <img id="imageFileData" class="img-fluid img-thumbnail" src="data:image/*;base64,@(Convert.ToBase64String(Model.Project.ImageFileData))">
+                        }
+                        else
+                        {
+                            <img id="imageFileData" class="img-fluid img-thumbnail" src="~/img/defaultUserImage.png">
+                        }
+                    </div>
+                    <div>
+                        <input asp-for="Project.ImageFormFile" class="form-control" type="file" accept=".png, .jpg, .jpeg, .gif" onchange="document.getElementById('imageFileData').src = window.URL.createObjectURL(this.files[0])" />
+                        <span asp-validation-for="Project.ImageFormFile" class="text-danger"></span>
+                    </div>
                 </div>
-                <div>
-                    <input asp-for="Project.ImageFormFile" class="form-control" type="file" accept=".png, .jpg, .jpeg, .gif" onchange="document.getElementById('imageFileData').src = window.URL.createObjectURL(this.files[0])" />
-                    <span asp-validation-for="Project.ImageFormFile" class="text-danger"></span>
+                <div class="col-12 col-lg-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <label asp-for="Project.Name" class="control-label"></label>
+                            <input asp-for="Project.Name" class="form-control mb-3" />
+                            <span asp-validation-for="Project.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Project.Description" class="control-label"></label>
+                            <textarea asp-for="Project.Description" class="form-control mb-3"></textarea>
+                            <span asp-validation-for="Project.Description" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="Project.StartDate" class="control-label"></label>
+                            <input asp-for="Project.StartDate" class="form-control mb-3" />
+                            <span asp-validation-for="Project.StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="Project.EndDate" class="control-label"></label>
+                            <input asp-for="Project.EndDate" class="form-control mb-3" />
+                            <span asp-validation-for="Project.EndDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label class="control-label"> Choose a priority </label>
+                            <select asp-for="Project.ProjectPriorityId" class="form-control mb-5 form-select" asp-items="@Model.PriorityList"></select>
+                        </div>
+                        @if (User.IsInRole(Roles.Admin.ToString()))
+                        {
+                            <div class="form-group">
+                                <label class="control-label"> Project Manager </label>
+                                <select asp-for="PmId" class="form-control mb-5 form-select-sm form-select" asp-items="@Model.PMList">
+                                    <option></option>
+                                </select>
+                            </div>
+
+                        }
+                        <div class="mt-5 mb-2 d-flex justify-content-end">
+                            <div class="me-3">
+                                <a asp-action='MyProjects' class="btn btn-lg btn-outline-primary rounded w-auto shadow">Back to List</a>
+                            </div>
+                            <div>
+                                <input type="submit" value="Create" class="btn btn-lg btn-outline-primary shadow" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-8">
-                <div class="row">
-                    <div class="col-12">
-                        <label asp-for="Project.Name" class="control-label"></label>
-                        <input asp-for="Project.Name" class="form-control mb-3" />
-                        <span asp-validation-for="Project.Name" class="text-danger"></span>
-                    </div>
-                    <div class="col-12">
-                        <label asp-for="Project.Description" class="control-label"></label>
-                        <textarea asp-for="Project.Description" class="form-control mb-3"></textarea>
-                        <span asp-validation-for="Project.Description" class="text-danger"></span>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <label asp-for="Project.StartDate" class="control-label"></label>
-                        <input asp-for="Project.StartDate" class="form-control mb-3" />
-                        <span asp-validation-for="Project.StartDate" class="text-danger"></span>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <label asp-for="Project.EndDate" class="control-label"></label>
-                        <input asp-for="Project.EndDate" class="form-control mb-3" />
-                        <span asp-validation-for="Project.EndDate" class="text-danger"></span>
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <label class="control-label"> Choose a priority </label>
-                        <select asp-for="Project.ProjectPriorityId" class="form-control mb-5 form-select" asp-items="@Model.PriorityList"></select>
-                    </div>
-                    @if (User.IsInRole(Roles.Admin.ToString()))
-                    {
-                        <div class="form-group">
-                            <label class="control-label"> Project Manager </label>
-                            <select asp-for="PmId" class="form-control mb-5 form-select-sm form-select" asp-items="@Model.PMList">
-                                <option></option>
-                            </select>
-                        </div>
-
-                    }
-                    <div class="mt-5 mb-2 d-flex justify-content-end">
-                        <div class="me-3">
-                            <a asp-action='MyProjects' class="btn btn-lg btn-outline-primary rounded w-auto shadow">Back to List</a>
-                        </div>
-                        <div>
-                            <input type="submit" value="Create" class="btn btn-lg btn-outline-primary shadow" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 
 @section Scripts {

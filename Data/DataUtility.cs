@@ -73,7 +73,6 @@ namespace BugTracker.Data
 
         public static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager) {
             // Seed Roles
-            //await roleManager.CreateAsync(new IdentityRole(Roles.SuperAdmin.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.ProjectManager.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Developer.ToString()));
@@ -88,9 +87,6 @@ namespace BugTracker.Data
             {
                 IList<Company> defaultcompanies = new List<Company>()
                 {
-                    // Add filter to allow only SuperAdmin to see Company0
-                    //new Company() { CompanyName = "Company0", Description = "This is default Super Admin Company" },
-
                     new Company() { CompanyName = "Company1", Description="This is default Company 1" },
                     new Company() { CompanyName = "Company2", Description="This is default Company 2" },
                     new Company() { CompanyName = "Company3", Description="This is default Company 3" },
@@ -103,7 +99,6 @@ namespace BugTracker.Data
                 await context.SaveChangesAsync();
 
                 // Get company Ids
-                //company0Id = context.Companies.FirstOrDefault(p => p.CompanyName == "Company0").Id;
                 company1Id = context.Companies.FirstOrDefault(p => p.CompanyName == "Company1").Id;
                 company2Id = context.Companies.FirstOrDefault(p => p.CompanyName == "Company2").Id;
                 company3Id = context.Companies.FirstOrDefault(p => p.CompanyName == "Company3").Id;
@@ -220,35 +215,6 @@ namespace BugTracker.Data
 
         public static async Task SeedDefaultUsersAsync(UserManager<BTUser> userManager)
         {
-            // Seed Default Super Admin User
-            //var defaultUser = new BTUser
-            //{
-            //    UserName = "superadmin@bugtracker.com",
-            //    Email = "superadmin@bugtracker.com",
-            //    FirstName = "Ren",
-            //    LastName = "Erive",
-            //    EmailConfirmed = true,
-            //    CompanyId = company0Id
-            //};
-
-            //try
-            //{
-            //    var user = await userManager.FindByEmailAsync(defaultUser.Email);
-            //    if (user == null)
-            //    {
-            //        await userManager.CreateAsync(defaultUser, "Abc&123!");
-            //        await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("*********  ERROR  **********");
-            //    Console.WriteLine("Error Seeding Default Admin User1.");
-            //    Console.WriteLine(ex.Message);
-            //    Console.WriteLine("*****************************");
-            //    throw;
-            //}
-
             // Seed Default Admin User
             var defaultUser = new BTUser
             {
@@ -266,13 +232,13 @@ namespace BugTracker.Data
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, "Abc&123!");
-                    await userManager.AddToRoleAsync(defaultUser, Roles.SuperAdmin.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("*********  ERROR  **********");
-                Console.WriteLine("Error Seeding Default SuperAdmin User1.");
+                Console.WriteLine("Error Seeding Default Admin User1.");
                 Console.WriteLine(ex.Message);
                 Console.WriteLine("*****************************");
                 throw;
