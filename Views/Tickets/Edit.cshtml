@@ -1,61 +1,74 @@
 ﻿@model BugTracker.Models.Ticket
+@using BugTracker.Models.Enums
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="row col-12 col-lg-10">
+            <div class="p-3 border border-2 shadow bg-light">
+                <h4>Edit Ticket</h4>
+                <hr />
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ProjectId" />
+                    <input type="hidden" asp-for="Created" />
+                    <input type="hidden" asp-for="OwnerUserId" />
+                    <input type="hidden" asp-for="DeveloperUserId" />
+                    <input type="hidden" asp-for="Archived" />
 
-<h4>Ticket</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ProjectId" />
-            <input type="hidden" asp-for="Created" />
-            <input type="hidden" asp-for="OwnerUserId" />
-            <input type="hidden" asp-for="DeveloperUserId" />
-            <input type="hidden" asp-for="Archived" />
 
-
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control mb-3" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control mb-3" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control mb-3" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TicketTypeId" class="control-label"></label>
+                        <select asp-for="TicketTypeId" class="form-control form-select mb-3" asp-items="ViewBag.TicketTypeId"></select>
+                        <span asp-validation-for="TicketTypeId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TicketPriorityId" class="control-label"></label>
+                        <select asp-for="TicketPriorityId" class="form-control form-select mb-3" asp-items="ViewBag.TicketPriorityId"></select>
+                        <span asp-validation-for="TicketPriorityId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TicketStatusId" class="control-label"></label>
+                        <select asp-for="TicketStatusId" class="form-control form-select mb-3" asp-items="ViewBag.TicketStatusId"></select>
+                        <span asp-validation-for="TicketStatusId" class="text-danger"></span>
+                    </div>
+                    <div class="mt-5 mb-2 d-flex justify-content-end">
+                        <div class="me-3">
+                            @if (User.IsInRole(Roles.Admin.ToString()))
+                            {
+                                <a asp-action='AllTickets' class="btn btn-lg btn-outline-primary rounded w-auto shadow">Back to List</a>
+                            }
+                            else
+                            {
+                                <a asp-action='MyTickets' class="btn btn-lg btn-outline-primary rounded w-auto shadow">Back to List</a>
+                            }
+                        </div>
+                        <div>
+                            <input type="submit" value="Save" class="btn btn-lg btn-outline-primary shadow" />
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control mb-3" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketTypeId" class="control-label"></label>
-                <select asp-for="TicketTypeId" class="form-control form-select mb-3" asp-items="ViewBag.TicketTypeId"></select>
-                <span asp-validation-for="TicketTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketPriorityId" class="control-label"></label>
-                <select asp-for="TicketPriorityId" class="form-control form-select mb-3" asp-items="ViewBag.TicketPriorityId"></select>
-                <span asp-validation-for="TicketPriorityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketStatusId" class="control-label"></label>
-                <select asp-for="TicketStatusId" class="form-control form-select mb-3" asp-items="ViewBag.TicketStatusId"></select>
-                <span asp-validation-for="TicketStatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary mb-2" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="MyTickets">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
