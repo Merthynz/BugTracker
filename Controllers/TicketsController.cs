@@ -417,7 +417,7 @@ namespace BugTracker.Controllers
             ticket.Archived = true;
             await _ticketService.UpdateTicketAsync(ticket);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllTickets));
         }
 
         // GET: Tickets/Restore/5
@@ -449,7 +449,7 @@ namespace BugTracker.Controllers
             ticket.Archived = false;
             await _ticketService.UpdateTicketAsync(ticket);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllTickets));
         }
 
 
