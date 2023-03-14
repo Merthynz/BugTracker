@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Details";
 }
-
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="row col-12 col-lg-10">
+            <div class="p-3 border border-2 shadow bg-light">
 <h1>Details</h1>
 
 <div>
@@ -54,6 +57,11 @@
         </dd>
     </dl>
 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>

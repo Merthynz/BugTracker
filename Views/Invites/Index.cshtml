@@ -1,95 +1,107 @@
 ﻿@model IEnumerable<BugTracker.Models.Invite>
+@using BugTracker.Models.Enums
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.InviteDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JoinDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyToken)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InviteeEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InviteeFirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InviteeLastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsValid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invitor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invitee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Project)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JoinDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyToken)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteeEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteeFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteeLastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsValid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Invitor.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Invitee.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="row col-12 col-lg-10">
+            <div class="text-end mb-2">
+                @if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+                {
+                    <a asp-action='Create' class="btn btn-lg btn-outline-primary rounded shadow w-auto">Create New</a>
+                }
+            </div>
+            <div class="p-3 border border-2 shadow bg-light">
+                <h1>Index</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InviteDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.JoinDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CompanyToken)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InviteeEmail)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InviteeFirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.InviteeLastName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsValid)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Company)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invitor)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invitee)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Project)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InviteDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.JoinDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CompanyToken)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InviteeEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InviteeFirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InviteeLastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsValid)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Company.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Invitor.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Invitee.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Project.Name)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
