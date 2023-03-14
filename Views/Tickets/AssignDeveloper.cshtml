@@ -1,38 +1,48 @@
 ﻿@model BugTracker.Models.ViewModels.AssignDeveloperViewModel
 
+<div class="row mt-5">
+    <div class="d-flex justify-content-center">
+        <div class="row col-12 col-lg-6">
+            <div class="p-3 border border-2 shadow bg-light">
 
-<div class="container">
-    <h2>Assign Developer for</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <h3>@Model.Ticket.Title</h3>
-            <a style="font-size: small" asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Ticket.ProjectId">@Model.Ticket.Project.Name</a>
- 
-            <div class="card">
-                <div class="card-header">
-                    <label class="control-label">Assign Developer</label>
-                </div>
-                <div class="card-body">
-                    <form method="post" asp-action="AssignDeveloper" asp-controller="Tickets">
-                        <input asp-for="Ticket.Id" hidden/>
-                        <p>Description: @Model.Ticket.Description</p>
+                <div class="container">
+                    <h3>Assign Developer for:</h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>@Model.Ticket.Title</h4>
+                            <a style="font-size: small" asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Ticket.ProjectId">@Model.Ticket.Project.Name</a>
 
-                        <div class="form-group">
-                            <label class="col-form-label">Select Developers</label>
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <label class="control-label">Assign Developer</label>
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" asp-action="AssignDeveloper" asp-controller="Tickets">
+                                        <input asp-for="Ticket.Id" hidden />
+                                        <p>Description: @Model.Ticket.Description</p>
 
-                            <select required asp-for="DeveloperId" class="form-control form-select" asp-items="@Model.Developers">
-                                <option></option>
-                            </select>
+                                        <div class="form-group">
+                                            <label class="col-form-label">Select Developers</label>
+
+                                            <select required asp-for="DeveloperId" class="form-control form-select" asp-items="@Model.Developers">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                        <div class="mt-3 mb-2 d-flex justify-content-end">
+                                            <div class="me-3">
+                                                <a asp-action='UnassignedTickets' asp-controller="Tickets" class="btn btn-lg btn-outline-primary rounded w-7 shadow">Unassigned Tickets</a>
+                                            </div>
+                                            <div>
+                                                <input type="submit" value="Assign" class="btn btn-lg btn-outline-primary shadow" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group mt-3">
-                            <input type="submit" value="Assign" class="btn btn-primary" />
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div>
-        <a asp-action="UnassignedTickets" asp-controller="Tickets">Unassigned Tickets</a>
     </div>
 </div>
