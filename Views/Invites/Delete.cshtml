@@ -82,11 +82,16 @@
                             @Html.DisplayFor(model => model.Project.Name)
                         </dd>
                     </dl>
-
                     <form asp-action="Delete">
-                        <input type="hidden" asp-for="Id" />
-                        <input type="submit" value="Delete" class="btn btn-danger" /> |
-                        <a asp-action="Index">Back to List</a>
+                        <div class="mt-3 mb-2 d-flex justify-content-end">
+                            <div class="me-3">
+                                <input type="hidden" asp-for="Id" />
+                                <a asp-action='Index' class="btn btn-lg btn-outline-primary rounded w-7 shadow">Back to List</a>
+                            </div>
+                            <div>
+                                <input type="submit" value="Delete" class="btn btn-lg btn-outline-danger shadow" />
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
