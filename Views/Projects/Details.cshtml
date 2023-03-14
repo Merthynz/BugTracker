@@ -96,7 +96,7 @@
                                         <p class="text-muted mb-0">Project Manager</p>
                                         @if (User.IsInRole(nameof(Roles.Admin)) || (btUser.Id == projectManager.Id))
                                         {
-                                            <a class="btn btn-sm alert-primary" style="font:small" asp-action="AssignMembers" asp-controller="Projects" asp-route-id="@Model.Id">Manage Team</a>
+                                            <a class="btn btn-lg alert-primary mt-2" style="font:small" asp-action="AssignMembers" asp-controller="Projects" asp-route-id="@Model.Id">Manage Team</a>
                                         }
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
 
                                 @foreach (BTUser member in await ProjectService.GetAllProjectMembersExceptPMAsync(Model.Id))
                                 {
-                                    <li class="">
+                                    <li class="mb-3">
                                         <a href="">
                                             <div class="media">
                                                 @if (member.AvatarFileData != null)
@@ -236,15 +236,15 @@
                                                 <td><span class="badge bg-warning">@ticket.TicketPriority.Name</span></td>
                                                 <td>@ticket.Created.ToString("MM-dd-yyyy")</td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="fs-5 bi-justify"></i></a>
+                                                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" data-bs-toggle="tooltip" data-bs-placement="auto" title="Details"><i class="fs-5 bi-justify"></i></a>
                                                     @if (ticket.DeveloperUserId == btUser.Id || ticket.OwnerUserId == btUser.Id || (projectManager?.Id == btUser.Id) || User.IsInRole(nameof(Roles.Admin)))
                                                     {
-                                                        <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="fs-5 bi-pencil"></i></a>
+                                                        <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-controller="Tickets" asp-route-id="@ticket.Id" data-bs-toggle=" tooltip" data-bs-placement="auto" title="Edit"><i class="fs-5 bi-pencil"></i></a>
                                                     }
 
                                                     @if (User.IsInRole("Admin") || (projectManager?.Id == btUser.Id))
                                                     {
-                                                        <a class="btn btn-sm btn-outline-danger" asp-action="Archive" asp-controller="Tickets" asp-route-id="@ticket.Id" ><i class="fs-5 bi-archive"></i></a>
+                                                        <a class="btn btn-sm btn-outline-danger" asp-action="Archive" asp-controller="Tickets" asp-route-id="@ticket.Id" data-bs-toggle="tooltip" data-bs-placement="auto" title="Archive"><i class="fs-5 bi-archive"></i></a>
                                                     }
                                                 </td>
                                             </tr>
